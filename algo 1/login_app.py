@@ -4,7 +4,7 @@ Pastikan login.ui ada di folder yang sama dengan file ini.
 """
 import os
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QApplication, QLineEdit, QMainWindow, QMessageBox
 from PyQt5.uic import loadUi
 
 
@@ -14,8 +14,11 @@ class LoginApp(QMainWindow):
         ui_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "login.ui")
         loadUi(ui_path, self)
 
+        self.labelStatus.resize(200, 20)
+        self.txtPassword.setEchoMode(QLineEdit.Password)
         self.btnLogin.clicked.connect(self.handle_login)
         self.btnClear.clicked.connect(self.clear_form)
+        self.txtPassword.returnPressed.connect(self.handle_login)
         self.txtUsername.setFocus()
 
     def handle_login(self):

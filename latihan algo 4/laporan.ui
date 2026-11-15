@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LaporanWindow</class>
+ <widget class="QMainWindow" name="LaporanWindow">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>900</width><height>560</height></rect></property>
+  <property name="windowTitle"><string>Perpustakaan - Laporan Statistik</string></property>
+  <property name="styleSheet"><string notr="true">
+QMainWindow { background-color: #F8F9FA; }
+QLabel#lblTitle { font-size: 18px; font-weight: bold; color: #2C3E50; }
+QLabel { font-size: 12px; color: #333; }
+QLineEdit, QComboBox, QDateEdit, QSpinBox {
+    padding: 6px; border: 1px solid #BDC3C7; border-radius: 4px; background-color: white;
+}
+QLineEdit:focus, QComboBox:focus, QDateEdit:focus, QSpinBox:focus { border: 1px solid #3498DB; }
+QLineEdit:read-only { background-color: #ECF0F1; }
+QPushButton { background-color: #34495E; color: white; border: none; border-radius: 4px; padding: 8px 15px; font-weight: bold; }
+QPushButton:hover { background-color: #415B76; }
+QTableWidget { background-color: white; border: 1px solid #BDC3C7; gridline-color: #ECF0F1; }
+
+QFrame[objectName^="card"] { background-color: white; border: 1px solid #BDC3C7; border-radius: 8px; }
+QLabel[objectName^="lblCaption"] { font-size: 12px; color: #7F8C8D; }
+QLabel#lblTotalBuku, QLabel#lblPinjamAktif, QLabel#lblTotalDenda { font-size: 24px; font-weight: bold; color: #2C3E50; }
+</string></property>
+  <widget class="QWidget" name="centralwidget"><layout class="QVBoxLayout" name="verticalLayoutRoot"><item><widget class="QLabel" name="lblTitle"><property name="text"><string>📊 LAPORAN STATISTIK</string></property><property name="alignment"><set>Qt::AlignCenter</set></property></widget></item><item><layout class="QHBoxLayout" name="horizontalLayoutCards"><property name="spacing"><number>12</number></property><item><widget class="QFrame" name="cardTotalBuku"><property name="frameShape"><enum>QFrame::NoFrame</enum></property><layout class="QVBoxLayout" name="layout_cardTotalBuku"><item><widget class="QLabel" name="lblCaption_cardTotalBuku"><property name="text"><string>📚 Total Buku</string></property><property name="alignment"><set>Qt::AlignCenter</set></property></widget></item><item><widget class="QLabel" name="lblTotalBuku"><property name="text"><string>0</string></property><property name="alignment"><set>Qt::AlignCenter</set></property></widget></item></layout></widget></item><item><widget class="QFrame" name="cardPinjamAktif"><property name="frameShape"><enum>QFrame::NoFrame</enum></property><layout class="QVBoxLayout" name="layout_cardPinjamAktif"><item><widget class="QLabel" name="lblCaption_cardPinjamAktif"><property name="text"><string>📥 Sedang Dipinjam</string></property><property name="alignment"><set>Qt::AlignCenter</set></property></widget></item><item><widget class="QLabel" name="lblPinjamAktif"><property name="text"><string>0</string></property><property name="alignment"><set>Qt::AlignCenter</set></property></widget></item></layout></widget></item><item><widget class="QFrame" name="cardTotalDenda"><property name="frameShape"><enum>QFrame::NoFrame</enum></property><layout class="QVBoxLayout" name="layout_cardTotalDenda"><item><widget class="QLabel" name="lblCaption_cardTotalDenda"><property name="text"><string>💰 Total Denda</string></property><property name="alignment"><set>Qt::AlignCenter</set></property></widget></item><item><widget class="QLabel" name="lblTotalDenda"><property name="text"><string>Rp 0</string></property><property name="alignment"><set>Qt::AlignCenter</set></property></widget></item></layout></widget></item></layout></item><item><widget class="QLabel" name="lblTableTitle"><property name="text"><string>🏆 Buku Paling Sering Dipinjam</string></property></widget></item><item><widget class="QTableWidget" name="tableTerpopuler"><property name="editTriggers"><set>QAbstractItemView::NoEditTriggers</set></property><property name="selectionBehavior"><enum>QAbstractItemView::SelectRows</enum></property><property name="selectionMode"><enum>QAbstractItemView::SingleSelection</enum></property><column><property name="text"><string>ID Buku</string></property></column><column><property name="text"><string>Judul</string></property></column><column><property name="text"><string>Pengarang</string></property></column><column><property name="text"><string>Jumlah Dipinjam</string></property></column></widget></item><item><widget class="QPushButton" name="btnRefresh"><property name="text"><string>🔄 Refresh Laporan</string></property></widget></item><item><widget class="QPushButton" name="btnKembali"><property name="text"><string>🔙 Kembali ke Menu Utama</string></property></widget></item></layout></widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

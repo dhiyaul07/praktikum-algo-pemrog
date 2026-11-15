@@ -1,46 +1,57 @@
 import sys
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QMimeData
 
 
 class SourceList(QListWidget):
-    """List asal: item hanya bisa di-drag keluar."""
+    """List asal: item di-drag keluar sambil membawa data MIME (teks)."""
     def __init__(self):
         super().__init__()
         self.setDragEnabled(True)
         self.setDragDropMode(QAbstractItemView.DragOnly)
-        self.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.setDefaultDropAction(Qt.CopyAction)
+        self.setSelectionMode(QAbstractItemView.SingleSelection)
+
+    def mimeData(self, items):
+        # MIME data transfer: bungkus teks item ke dalam QMimeData
+        mime = QMimeData()
+        mime.setText("\n".join(item.text() for item in items))
+        return mime
 
 
 class TargetList(QListWidget):
-    """List tujuan: menerima drop dari SourceList dan bisa diatur ulang."""
+    """List tujuan: menerima drop (MIME) dari list kiri dan bisa diatur ulang."""
     def __init__(self):
         super().__init__()
         self.setAcceptDrops(True)
         self.setDragEnabled(True)
         self.setDragDropMode(QAbstractItemView.DragDrop)
         self.setDefaultDropAction(Qt.MoveAction)
-        self.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.setSelectionMode(QAbstractItemView.SingleSelection)
 
     def dragEnterEvent(self, event):
-        if event.source() is not None:
-            event.acceptProposedAction()
+        if event.source() is self:
+            super().dragEnterEvent(event)          # atur ulang di list sendiri
+        elif event.mimeData().hasText():
+            event.acceptProposedAction()           # terima data MIME teks
         else:
             event.ignore()
 
     def dragMoveEvent(self, event):
-        event.acceptProposedAction()
+        if event.source() is self:
+            super().dragMoveEvent(event)
+        elif event.mimeData().hasText():
+            event.acceptProposedAction()
+        else:
+            event.ignore()
 
     def dropEvent(self, event):
-        source = event.source()
-        if source is self:
-            # diatur ulang di dalam list yang sama
-            super().dropEvent(event)
-        elif isinstance(source, SourceList):
-            # salin item dari list kiri
-            for item in source.selectedItems():
-                self.addItem(item.text())
-            event.setDropAction(Qt.CopyAction)
+        if event.source() is self:
+            super().dropEvent(event)               # reorder item
+        elif event.mimeData().hasText():
+            for text in event.mimeData().text().split("\n"):
+                self.addItem(text)                 # ambil teks dari MIME data
+            event.setDropAction(Qt.CopyAction)     # item di kiri tetap ada
             event.accept()
         else:
             event.ignore()
